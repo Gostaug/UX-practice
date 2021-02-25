@@ -1,16 +1,13 @@
 <template>
   <div class="home-content">
-    <el-button type="primary" @click="goToForm">Not so nice form</el-button>
-    <TiltingBox/>
+    <el-button type="primary" @click="$router.push('funForm')">Fun Form</el-button>
   </div>
 </template>
 
 <script>
-import TiltingBox from './TiltingBox.vue'
 export default {
   name: 'HomeContent',
   components: {
-    TiltingBox
   }
   
 }
