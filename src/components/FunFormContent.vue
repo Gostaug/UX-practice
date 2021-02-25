@@ -1,7 +1,13 @@
 <template>
   <el-form ref="form" :model="form" label-position="left" label-width="120px">
-  <el-form-item label="Activity name">
-    <el-input v-model="form.name"></el-input>
+  <el-form-item label="First Name">
+    <alphabet-input/>
+  </el-form-item>
+  <el-form-item label="Phone number">
+    <el-input v-model="form.phone" :readonly="true"></el-input>
+    <el-button class="margin-first" type="primary" @click="incrementNumber">+</el-button>
+    <el-button type="primary" @click="decrementNumber">-</el-button>
+    <el-button type="primary" @click="generateNumber">Feeling lucky ?</el-button>
   </el-form-item>
   <el-form-item label="Activity zone">
     <el-select v-model="form.region" placeholder="please select your zone">
@@ -46,12 +52,16 @@
 </template>
 
 <script>
+import AlphabetInput from './AlphabetInput.vue'
 export default {
   name: 'FunForm',
+  components:{
+    AlphabetInput
+  },
     data() {
       return {
         form: {
-          name: '',
+          phone:'0',
           region: '',
           date1: '',
           date2: '',
@@ -65,12 +75,24 @@ export default {
     methods: {
       onSubmit() {
         console.log('submit!');
-      }
+      },
+      generateNumber: function () {		
+        this.form.phone ='0' + ( Math.floor(Math.random()*899999999) + 100000000); 
+    },
+      incrementNumber: function () {		
+        this.form.phone ='0' + (parseInt(this.form.phone) + 1); 
+    } ,  
+      decrementNumber: function () {		
+        this.form.phone ='0' + (parseInt(this.form.phone) - 1); 
     }
+    }  
   }
 </script>
 
 <style scoped>
+.margin-first{
+  margin-left: 10px;
+}
 .el-form-item  >>> .el-form-item__content {
     display: flex;
     min-height: 40px;
