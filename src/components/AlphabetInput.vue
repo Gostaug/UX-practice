@@ -2,7 +2,7 @@
     <div class="alphabet-input">
         <div class="container">
             <el-input v-model="myText" :readonly="true"></el-input>
-            <el-button type="primary" @click="selectLetter">select</el-button>
+            <el-button class="space-left" type="primary" @click="selectLetter">select</el-button>
             <el-button type="primary" @click="myText = ''">clear</el-button>
         </div>
         <div class="alphabet">
@@ -57,6 +57,7 @@ methods: {
     },
     selectLetter(){
         this.myText=this.myText + this.abc.charAt(this.counter)
+        this.$emit('update', this.myText)
     },
     incrementTime() {
         if(this.counter <24){
@@ -97,5 +98,8 @@ created: function () {
 .selected{
     color: grey;
     border-bottom: 3px solid grey;
+}
+.space-left{
+    margin-left: 10px;
 }
 </style>

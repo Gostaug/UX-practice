@@ -1,7 +1,7 @@
 <template>
   <el-form ref="form" :model="form" label-position="left" label-width="120px">
   <el-form-item label="First Name">
-    <alphabet-input/>
+    <alphabet-input @update="setFirstName"/>
   </el-form-item>
   <el-form-item label="Phone number">
     <el-input v-model="form.phone" :readonly="true"></el-input>
@@ -9,40 +9,8 @@
     <el-button type="primary" @click="decrementNumber">-</el-button>
     <el-button type="primary" @click="generateNumber">Feeling lucky ?</el-button>
   </el-form-item>
-  <el-form-item label="Activity zone">
-    <el-select v-model="form.region" placeholder="please select your zone">
-      <el-option label="Zone one" value="shanghai"></el-option>
-      <el-option label="Zone two" value="beijing"></el-option>
-    </el-select>
-  </el-form-item>
-  <el-form-item label="Activity time">
-    <el-col :span="11">
-      <el-date-picker type="date" placeholder="Pick a date" v-model="form.date1" style="width: 100%;"></el-date-picker>
-    </el-col>
-    <el-col class="line" :span="2">-</el-col>
-    <el-col :span="11">
-      <el-time-picker placeholder="Pick a time" v-model="form.date2" style="width: 100%;"></el-time-picker>
-    </el-col>
-  </el-form-item>
-  <el-form-item label="Instant delivery">
-    <el-switch style="height: 100%;" v-model="form.delivery"></el-switch>
-  </el-form-item>
-  <el-form-item label="Activity type">
-    <el-checkbox-group v-model="form.type">
-      <el-checkbox label="Online activities" name="type"></el-checkbox>
-      <el-checkbox label="Promotion activities" name="type"></el-checkbox>
-      <el-checkbox label="Offline activities" name="type"></el-checkbox>
-      <el-checkbox label="Simple brand exposure" name="type"></el-checkbox>
-    </el-checkbox-group>
-  </el-form-item>
-  <el-form-item label="Resources">
-    <el-radio-group v-model="form.resource">
-      <el-radio label="Sponsor"></el-radio>
-      <el-radio label="Venue"></el-radio>
-    </el-radio-group>
-  </el-form-item>
-  <el-form-item label="Activity form">
-    <el-input type="textarea" v-model="form.desc"></el-input>
+  <el-form-item label="Birth date">
+    <date-slider @update="setBirthDate"/>
   </el-form-item>
   <el-form-item>
     <el-button type="primary" @click="onSubmit">Create</el-button>
@@ -53,22 +21,19 @@
 
 <script>
 import AlphabetInput from './AlphabetInput.vue'
+import DateSlider from './DateSlider.vue'
 export default {
   name: 'FunForm',
   components:{
-    AlphabetInput
+    AlphabetInput,
+    DateSlider
   },
     data() {
       return {
         form: {
+          firstName: '',
           phone:'0',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
+          birthDate: '',
         }
       }
     },
@@ -76,12 +41,18 @@ export default {
       onSubmit() {
         console.log('submit!');
       },
+      setFirstName (firstName) {
+      this.firstName = firstName;
+      },
+      setBirthDate (birthDate) {
+      this.birthDate = birthDate;
+      },
       generateNumber: function () {		
         this.form.phone ='0' + ( Math.floor(Math.random()*899999999) + 100000000); 
-    },
+      },
       incrementNumber: function () {		
         this.form.phone ='0' + (parseInt(this.form.phone) + 1); 
-    } ,  
+      } ,  
       decrementNumber: function () {		
         this.form.phone ='0' + (parseInt(this.form.phone) - 1); 
     }
